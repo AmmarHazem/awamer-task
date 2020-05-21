@@ -97,14 +97,6 @@ class _ServiceDetailsState extends State<ServiceDetails> {
       final starsNumber = _provider.rate;
       final borderStarsNumber = 5 - _provider.rate;
       child = <Widget>[
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Theme.of(context).accentColor,
-          ),
-          height: 3,
-          width: 150,
-        ),
         const SizedBox(height: 15),
         Padding(
           padding: xPadding,
@@ -278,22 +270,6 @@ class _ServiceDetailsState extends State<ServiceDetails> {
       ];
     }
     final listItems = <Widget>[
-      SizedBox(
-        height: 220,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 15),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.arrow_back),
-                onPressed: () {},
-                color: Colors.white,
-              ),
-            ],
-          ),
-        ),
-      ),
       Container(
         width: double.infinity,
         padding: const EdgeInsets.only(top: 30),
@@ -312,26 +288,69 @@ class _ServiceDetailsState extends State<ServiceDetails> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Stack(
-          children: <Widget>[
-            Positioned(
-              child: Container(
-                width: double.infinity,
-                height: 300,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
+        child: CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              automaticallyImplyLeading: false,
+              pinned: true,
+              expandedHeight: 300,
+              backgroundColor: Theme.of(context).accentColor,
+              title: Row(
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.arrow_back),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+              flexibleSpace: FlexibleSpaceBar(
+                background: Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
                     image: AssetImage('images/1.png'),
                     fit: BoxFit.cover,
+                  )),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(40),
+                            topRight: Radius.circular(40),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.white,
+                              spreadRadius: 1,
+                              blurRadius: 0,
+                              offset: Offset(0, 2)
+                            )
+                          ],
+                        ),
+                        width: double.infinity,
+                        height: 40,
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Theme.of(context).accentColor,
+                          ),
+                          height: 3,
+                          width: 150,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              top: 0,
-              left: 0,
-              right: 0,
             ),
-            ListView.builder(
-              itemBuilder: (cxt, index) => listItems[index],
-              itemCount: listItems.length,
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (cxt, index) => listItems[index],
+                childCount: listItems.length,
+              ),
             ),
           ],
         ),
