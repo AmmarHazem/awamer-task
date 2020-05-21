@@ -258,7 +258,7 @@ class _RequestServiceState extends State<RequestService> {
                 children: <Widget>[
                   IconButton(
                     icon: Icon(Icons.arrow_back),
-                    onPressed: () {},
+                    onPressed: () => Navigator.pop(context),
                   ),
                 ],
               ),
